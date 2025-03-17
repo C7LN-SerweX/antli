@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restauracja ANTLI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #111;
+            padding: 20px;
+        }
+        img.logo {
+            max-width: 200px;
+        }
+        .menu-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 20px;
+            background-color: #333;
+        }
+        .menu-container button {
+            background-color: #444;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        .menu-container button:hover {
+            background-color: #666;
+        }
+        .section {
+            display: none;
+            padding: 20px;
+        }
+        .active {
+            display: block;
+        }
+        .order-form {
+            background-color: #444;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            margin: 20px auto;
+        }
+        .order-form input, .order-form select {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: none;
+        }
+        .order-form button {
+            background-color: #ff9900;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        .order-form button:hover {
+            background-color: #cc7700;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img class="logo" src="https://cdn.discordapp.com/attachments/1339579815614746708/1351272324644470895/Zrzut_ekranu_2025-03-17_170218.png?ex=67d9c5eb&is=67d8746b&hm=0d79c4478c9277835451e84b8596b9664e419b292d2aba64dfbbc9a7669422e7&" alt="ANTLI Logo">
+    </header>
+    
+    <div class="menu-container">
+        <button onclick="showSection('american')">Kuchnia Amerykańska</button>
+        <button onclick="showSection('italian')">Kuchnia Włoska</button>
+        <button onclick="showSection('main')">Dania Główne</button>
+        <button onclick="showSection('order')">Zamówienie</button>
+        <button onclick="showSection('zup')">Zupy</button>
+    </div>
+
+    <div id="american" class="section active">
+        <h2>BURGERY</h2>
+        <p>Hamburger - 7.99 ZL <br>ChesseBurger - 7.99 ZL <br>Podwójny Hamburger - 9.99 ZL</p>
+        <h2>FRYTKI</h2>
+        <p>Frytki Ziemniaczane - 8.99 ZL<br>Frytki Ziemniaczane W Kształty - 9.99 ZL</p>
+        <h2>HOTDOGI</h2>
+        <p>HotDog Własny Wybór Dodatków - 11.99 ZL</p>
+    </div>
+    
+    <div id="italian" class="section">
+        <h2>PIZZA</h2>
+        <p>Pizza Margherita - 7.99 ZL<br>Pizza Peperoni - 9.99 ZL<br>Pizza Capricosia - 9.99 ZL<br>Pizza Marina</p>
+        <h2>SPAGHETTI</h2>
+        <p>Tagiatelle W Sosie Pomidorowym - 7.99 ZL<br>Spaghetti Bolognese - 8.99 ZL<br>Pene W Sosie Pomidorowym - 6.99 ZL<br>Kokardki W Sosie Pomidorowym - 7.99 ZL</p>
+    </div>
+    
+    <div id="main" class="section">
+        <h2>DANIA JAK U BABCIe</h2>
+        <p>Polęwica Z Indyka - 7.99 ZL<br>Ziemniaki Z Koperkiem - 5 ZL<br>Puree Ziemniaczane - 5 ZL</p>
+        <h2>MIĘSO</h2>
+        <p>Stek Wołowy - 15.99 ZL<br>Mięso Od Burgera - 4.99 ZL<br>Polędwiczka Wieporzowa - 7.99 ZL</p>
+    </div>
+    
+    <div id="zup" class="section">
+        <h2>MAŁA PORCJA</h2>
+        <p>Zupa Pomidorowa - 5.99 ZL<br>Rosół Z Makaronem - 6.99 ZL<br>Krupnik - 7.99 ZL<br>Barszcz - 8.99 ZL</p>
+        <h2>DUŻA PORCJA</h2>
+        <p>Zupa Pomidorowa - 8.99 ZL<br>Rosół Z Makaronem - 9.99 ZL<br>Krupnik - 11.99 ZL<br>Barszcz - 13.99 ZL</p>
+    </div>
+        
+    <div id="order" class="section">
+        <h2>Zamówienie</h2>
+        <div class="order-form">
+            <label>Co dzisiaj będzie jedzone :D?</label>
+            <input type="text" id="order-items" placeholder="Np. Cheeseburger, frytki">
+            <label>Gdzie Dzisiaj Dostarczamy :D?:</label>
+            <input type="text" id="order-address" placeholder="Podaj adres">
+            <label>Jak Dzisiaj Płacisz :D?</label>
+            <select id="order-payment">
+                <option>Gotówka</option>
+            </select>
+            <button onclick="sendOrder()">Zamów</button>
+        </div>
+    </div>
+    
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+        }
+        function sendOrder() {
+            const webhookUrl = "https://discord.com/api/webhooks/1351279080850456647/fri4cXOgg-2a0DtdKmICzJyNg-1QyrjPeQS9SdL4MP5mMOyeYaLXhTptD6ekd4V2-Uf4"; // Podmień na swój Webhook Discorda
+            const items = document.getElementById("order-items").value;
+            const address = document.getElementById("order-address").value;
+            const payment = document.getElementById("order-payment").value;
+            
+            if (!items || !address) {
+                alert("Proszę wypełnić wszystkie pola zamówienia.");
+                return;
+            }
+            
+            const payload = {
+                content: `**Nowe zamówienie!**\n🛒 **Zamówienie:** ${items}\n📍 **Adres:** ${address}\n💰 **Płatność:** ${payment}`
+            };
+            
+            fetch(webhookUrl, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert("Zamówienie wysłane!");
+                } else {
+                    alert("Błąd przy wysyłaniu zamówienia.");
+                }
+            })
+            .catch(error => {
+                console.error("Błąd:", error);
+                alert("Błąd przy wysyłaniu zamówienia.");
+            });
+        } 
+    </script>
+</body>
+</html>
