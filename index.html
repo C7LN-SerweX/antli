@@ -4,156 +4,272 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restauracja ANTLI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #222;
-            color: #fff;
-            text-align: center;
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #111, #222);
+            color: white;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
         header {
-            background-color: #111;
+            background: rgba(0, 0, 0, 0.8);
             padding: 20px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
         }
+
         img.logo {
-            max-width: 200px;
+            max-width: 180px;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
         }
+
         .menu-container {
+            margin-top: 100px;
             display: flex;
             justify-content: center;
+            flex-wrap: wrap;
             gap: 15px;
             padding: 20px;
-            background-color: #333;
         }
+
         .menu-container button {
-            background-color: #444;
+            background: linear-gradient(45deg, #ff9900, #cc7700);
             color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
+            padding: 12px 25px;
             font-size: 18px;
-            border-radius: 5px;
-            transition: 0.3s;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(255, 153, 0, 0.4);
+            border: 3px solid transparent;
         }
+
+        /* Gradientowa animowana obramówka */
+        .menu-container button::before {
+            content: "";
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet, red);
+            z-index: -1;
+            border-radius: 10px;
+            animation: rainbowBorder 3s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        @keyframes rainbowBorder {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        .menu-container button:hover::before {
+            opacity: 1;
+        }
+
         .menu-container button:hover {
-            background-color: #666;
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(255, 153, 0, 0.6);
         }
+
         .section {
             display: none;
-            padding: 20px;
+            padding: 30px;
+            animation: fadeIn 0.6s ease-in-out;
         }
+
         .active {
             display: block;
         }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
         .order-form {
-            background-color: #444;
-            padding: 20px;
-            border-radius: 10px;
-            max-width: 400px;
-            margin: 20px auto;
-        }
-        .order-form input, .order-form select {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-            border-radius: 5px;
-            border: none;
-        }
-        .order-form button {
-            background-color: #ff9900;
-            color: white;
-            padding: 10px;
-            border: none;
-            cursor: pointer;
-            font-size: 18px;
-            border-radius: 5px;
-            transition: 0.3s;
-        }
-        .order-form button:hover {
-            background-color: #cc7700;
-        }
+        background: rgba(255, 255, 255, 0.1);
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        max-width: 400px;
+        margin: 20px auto;
+    }
+
+    .order-form label {
+        display: block;
+        font-size: 18px;
+        margin-bottom: 5px;
+        color: #fff;
+        text-align: left;
+    }
+
+    .order-form input, .order-form select {
+        width: 100%;
+        padding: 12px;
+        margin: 10px 0;
+        border-radius: 6px;
+        border: none;
+        font-size: 16px;
+        text-align: center;
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        transition: all 0.3s ease;
+    }
+
+    .order-form input:focus, .order-form select:focus {
+        background: rgba(255, 255, 255, 0.3);
+        outline: none;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+
+    .order-form button {
+        background: linear-gradient(45deg, #ff7700, #ff3300);
+        color: white;
+        padding: 12px;
+        font-size: 18px;
+        font-weight: bold;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .order-form button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(255, 51, 0, 0.5);
+    }
     </style>
 </head>
 <body>
     <header>
-        <img class="logo" src="https://cdn.discordapp.com/attachments/1339579815614746708/1351272324644470895/Zrzut_ekranu_2025-03-17_170218.png?ex=67d9c5eb&is=67d8746b&hm=0d79c4478c9277835451e84b8596b9664e419b292d2aba64dfbbc9a7669422e7&" alt="ANTLI Logo">
+        <img class="logo" src="https://cdn.discordapp.com/attachments/1339579815614746708/1351272324644470895/Zrzut_ekranu_2025-03-17_170218.png" alt="ANTLI Logo">
     </header>
     
     <div class="menu-container">
         <button onclick="showSection('american')">Kuchnia Amerykańska</button>
         <button onclick="showSection('italian')">Kuchnia Włoska</button>
         <button onclick="showSection('main')">Dania Główne</button>
-        <button onclick="showSection('order')">Zamówienie</button>
         <button onclick="showSection('zup')">Zupy</button>
+        <button onclick="showSection('order')">Zamówienia</button>
     </div>
 
     <div id="american" class="section active">
         <h2>BURGERY</h2>
-        <p>Hamburger - 7.99 ZL <br>ChesseBurger - 7.99 ZL <br>Podwójny Hamburger - 9.99 ZL</p>
+        <p>Hamburger - 7.99 ZL<br>Cheeseburger - 7.99 ZL<br>Podwójny Hamburger - 9.99 ZL</p>
         <h2>FRYTKI</h2>
-        <p>Frytki Ziemniaczane - 8.99 ZL<br>Frytki Ziemniaczane W Kształty - 9.99 ZL</p>
+        <p>Frytki ziemniaczane - 8.99 ZL<br>Frytki w kształcie gwiazdek - 9.99 ZL</p>
         <h2>HOTDOGI</h2>
-        <p>HotDog Własny Wybór Dodatków - 11.99 ZL</p>
+        <p>HotDog z własnym wyborem dodatków - 11.99 ZL</p>
     </div>
     
     <div id="italian" class="section">
         <h2>PIZZA</h2>
-        <p>Pizza Margherita - 7.99 ZL<br>Pizza Peperoni - 9.99 ZL<br>Pizza Capricosia - 9.99 ZL<br>Pizza Marina</p>
+        <p>Pizza Margherita - 7.99 ZL<br>Pizza Peperoni - 9.99 ZL<br>Pizza Capricciosa - 9.99 ZL</p>
         <h2>SPAGHETTI</h2>
-        <p>Tagiatelle W Sosie Pomidorowym - 7.99 ZL<br>Spaghetti Bolognese - 8.99 ZL<br>Pene W Sosie Pomidorowym - 6.99 ZL<br>Kokardki W Sosie Pomidorowym - 7.99 ZL</p>
+        <p>Tagliatelle w sosie pomidorowym - 7.99 ZL<br>Spaghetti Bolognese - 8.99 ZL</p>
     </div>
     
     <div id="main" class="section">
-        <h2>DANIA JAK U BABCIe</h2>
-        <p>Polęwica Z Indyka - 7.99 ZL<br>Ziemniaki Z Koperkiem - 5 ZL<br>Puree Ziemniaczane - 5 ZL</p>
+        <h2>DANIA GŁÓWNE</h2>
+        <p>Polędwica z indyka - 7.99 ZL<br>Ziemniaki z koperkiem - 5.00 ZL<br>Puree ziemniaczane - 5.00 ZL</p>
         <h2>MIĘSO</h2>
-        <p>Stek Wołowy - 15.99 ZL<br>Mięso Od Burgera - 4.99 ZL<br>Polędwiczka Wieporzowa - 7.99 ZL</p>
+        <p>Stek wołowy - 15.99 ZL<br>Mięso do burgera - 4.99 ZL<br>Polędwiczka wieprzowa - 7.99 ZL</p>
     </div>
     
     <div id="zup" class="section">
-        <h2>MAŁA PORCJA</h2>
-        <p>Zupa Pomidorowa - 5.99 ZL<br>Rosół Z Makaronem - 6.99 ZL<br>Krupnik - 7.99 ZL<br>Barszcz - 8.99 ZL</p>
-        <h2>DUŻA PORCJA</h2>
-        <p>Zupa Pomidorowa - 8.99 ZL<br>Rosół Z Makaronem - 9.99 ZL<br>Krupnik - 11.99 ZL<br>Barszcz - 13.99 ZL</p>
+        <h2>ZUPY</h2>
+        <p>Zupa pomidorowa - 5.99 ZL<br>Rosół z makaronem - 6.99 ZL<br>Krupnik - 7.99 ZL<br>Barszcz - 8.99 ZL</p>
     </div>
-        
+
     <div id="order" class="section">
-        <h2>Zamówienie</h2>
+        <h2>📦 Zamówienie</h2>
         <div class="order-form">
-            <label>Co dzisiaj będzie jedzone :D?</label>
-            <input type="text" id="order-items" placeholder="Np. Cheeseburger, frytki">
-            <label>Gdzie Dzisiaj Dostarczamy :D?:</label>
-            <input type="text" id="order-address" placeholder="Podaj adres">
-            <label>Jak Dzisiaj Płacisz :D?</label>
+            <label for="order-items">🛒 Co chcesz zamówić?</label>
+            <input type="text" id="order-items" list="menu-items" placeholder="Np. Cheeseburger, frytki">
+            <datalist id="menu-items">
+                <option value="Hamburger">
+                <option value="Cheeseburger">
+                <option value="Podwójny Hamburger">
+                <option value="Frytki ziemniaczane">
+                <option value="Frytki w kształcie gwiazdek">
+                <option value="HotDog z własnym wyborem dodatków">
+                <option value="Pizza Margherita">
+                <option value="Pizza Peperoni">
+                <option value="Pizza Capricciosa">
+                <option value="Tagliatelle w sosie pomidorowym">
+                <option value="Spaghetti Bolognese">
+                <option value="Stek wołowy">
+                <option value="Polędwiczka wieprzowa">
+                <option value="Zupa pomidorowa">
+                <option value="Rosół z makaronem">
+                <option value="Krupnik">
+                <option value="Barszcz">
+            </datalist>
+    
+            <label for="order-address">📍 Adres dostawy:</label>
+            <input type="text" id="order-address" placeholder="Wpisz dokładny adres">
+    
+            <label for="order-payment">💰 Metoda płatności:</label>
             <select id="order-payment">
                 <option>Gotówka</option>
             </select>
-            <button onclick="sendOrder()">Zamów</button>
-        </div>
-    </div>
     
+            <button onclick="sendOrder()">✅ Zamów</button>
+        </div>
+    </div> 
+
     <script>
+        // Funkcja do przełączania widocznych sekcji menu
         function showSection(sectionId) {
             document.querySelectorAll('.section').forEach(section => {
                 section.classList.remove('active');
             });
             document.getElementById(sectionId).classList.add('active');
         }
+    
+        // Funkcja wysyłania zamówienia do webhooka Discorda
         function sendOrder() {
-            const webhookUrl = "https://discord.com/api/webhooks/1351279080850456647/fri4cXOgg-2a0DtdKmICzJyNg-1QyrjPeQS9SdL4MP5mMOyeYaLXhTptD6ekd4V2-Uf4"; // Podmień na swój Webhook Discorda
-            const items = document.getElementById("order-items").value;
-            const address = document.getElementById("order-address").value;
+            const webhookUrl = "https://discord.com/api/webhooks/1351279080850456647/fri4cXOgg-2a0DtdKmICzJyNg-1QyrjPeQS9SdL4MP5mMOyeYaLXhTptD6ekd4V2-Uf4";
+            const items = document.getElementById("order-items").value.trim();
+            const address = document.getElementById("order-address").value.trim();
             const payment = document.getElementById("order-payment").value;
             
+            // Sprawdzenie, czy pola są wypełnione
             if (!items || !address) {
-                alert("Proszę wypełnić wszystkie pola zamówienia.");
+                alert("⚠️ Proszę wypełnić wszystkie pola zamówienia!");
                 return;
             }
             
             const payload = {
-                content: `**Nowe zamówienie!**\n🛒 **Zamówienie:** ${items}\n📍 **Adres:** ${address}\n💰 **Płatność:** ${payment}`
+                content: `**🛒 Nowe zamówienie!**\n🍔 **Zamówienie:** ${items}\n📍 **Adres:** ${address}\n💰 **Płatność:** ${payment}`
             };
             
             fetch(webhookUrl, {
@@ -163,16 +279,21 @@
             })
             .then(response => {
                 if (response.ok) {
-                    alert("Zamówienie wysłane!");
+                    alert("✅ Zamówienie zostało wysłane!");
+                    // Czyszczenie formularza po wysłaniu
+                    document.getElementById("order-items").value = "";
+                    document.getElementById("order-address").value = "";
+                    document.getElementById("order-payment").selectedIndex = 0;
                 } else {
-                    alert("Błąd przy wysyłaniu zamówienia.");
+                    alert("❌ Błąd przy wysyłaniu zamówienia.");
                 }
             })
             .catch(error => {
                 console.error("Błąd:", error);
-                alert("Błąd przy wysyłaniu zamówienia.");
+                alert("❌ Wystąpił problem z wysyłaniem zamówienia.");
             });
-        } 
+        }
     </script>
+    
 </body>
 </html>
