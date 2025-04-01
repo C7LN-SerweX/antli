@@ -1,10 +1,10 @@
-<!DOCTYPE html>
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restauracja ANTLI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -18,6 +18,7 @@
             color: white;
             text-align: center;
             overflow-x: hidden;
+            min-height: 100vh;
         }
 
         header {
@@ -29,16 +30,27 @@
             left: 0;
             z-index: 100;
             backdrop-filter: blur(10px);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            padding: 15px;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
         }
 
         img.logo {
             max-width: 180px;
-            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.7));
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled img.logo {
+            max-width: 150px;
         }
 
         .menu-container {
-            margin-top: 100px;
+            margin-top: 120px;
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
@@ -59,42 +71,42 @@
             position: relative;
             box-shadow: 0 5px 15px rgba(255, 153, 0, 0.4);
             border: 3px solid transparent;
+            overflow: hidden;
+            z-index: 1;
         }
 
-        /* Gradientowa animowana obramówka */
-        .menu-container button::before {
-            content: "";
+        .menu-container button::after {
+            content: '';
             position: absolute;
-            top: -3px;
-            left: -3px;
-            right: -3px;
-            bottom: -3px;
-            background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet, red);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #cc7700, #ff9900);
             z-index: -1;
-            border-radius: 10px;
-            animation: rainbowBorder 3s linear infinite;
             opacity: 0;
-            transition: opacity 0.3s;
+            transition: opacity 0.3s ease;
         }
 
-        @keyframes rainbowBorder {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(360deg); }
-        }
-
-        .menu-container button:hover::before {
+        .menu-container button:hover::after {
             opacity: 1;
         }
 
         .menu-container button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 20px rgba(255, 153, 0, 0.6);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 153, 0, 0.6);
+        }
+
+        .menu-container button i {
+            margin-right: 8px;
         }
 
         .section {
             display: none;
             padding: 30px;
             animation: fadeIn 0.6s ease-in-out;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .active {
@@ -111,117 +123,494 @@
                 transform: translateY(0);
             }
         }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            color: #ff9900;
+            margin: 25px 0 15px;
+            font-size: 2.2rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #ff9900, transparent);
+            border-radius: 3px;
+        }
+
+        .menu-category {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px auto;
+            max-width: 800px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .menu-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 12px 15px;
+            border-radius: 8px;
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .menu-item-name {
+            font-weight: 600;
+            text-align: left;
+            flex: 2;
+        }
+
+        .menu-item-price {
+            color: #ff9900;
+            font-weight: 700;
+            flex: 1;
+            text-align: right;
+        }
+
         .order-form {
-        background: rgba(255, 255, 255, 0.1);
-        padding: 25px;
-        border-radius: 12px;
-        box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(10px);
-        max-width: 400px;
-        margin: 20px auto;
-    }
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            max-width: 500px;
+            margin: 30px auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
 
-    .order-form label {
-        display: block;
-        font-size: 18px;
-        margin-bottom: 5px;
-        color: #fff;
-        text-align: left;
-    }
+        .order-form:hover {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            transform: translateY(-3px);
+        }
 
-    .order-form input, .order-form select {
-        width: 100%;
-        padding: 12px;
-        margin: 10px 0;
-        border-radius: 6px;
-        border: none;
-        font-size: 16px;
-        text-align: center;
-        background: rgba(255, 255, 255, 0.2);
-        color: white;
-        transition: all 0.3s ease;
-    }
+        .order-form label {
+            display: block;
+            font-size: 18px;
+            margin: 15px 0 8px;
+            color: #ff9900;
+            text-align: left;
+            font-weight: 600;
+        }
 
-    .order-form input:focus, .order-form select:focus {
-        background: rgba(255, 255, 255, 0.3);
-        outline: none;
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-    }
+        .order-form input, .order-form select, .order-form textarea {
+            width: 100%;
+            padding: 14px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 16px;
+            text-align: left;
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            transition: all 0.3s ease;
+        }
 
-    .order-form button {
-        background: linear-gradient(45deg, #ff7700, #ff3300);
-        color: white;
-        padding: 12px;
-        font-size: 18px;
-        font-weight: bold;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        width: 100%;
-        margin-top: 10px;
-    }
+        .order-form input:focus, .order-form select:focus, .order-form textarea:focus {
+            background: rgba(0, 0, 0, 0.5);
+            outline: none;
+            box-shadow: 0 0 15px rgba(255, 153, 0, 0.4);
+            border-color: #ff9900;
+        }
 
-    .order-form button:hover {
-        transform: scale(1.05);
-        box-shadow: 0 5px 15px rgba(255, 51, 0, 0.5);
-    }
+        .order-form button {
+            background: linear-gradient(45deg, #ff7700, #ff3300);
+            color: white;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .order-form button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: all 0.5s ease;
+        }
+
+        .order-form button:hover::before {
+            left: 100%;
+        }
+
+        .order-form button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 51, 0, 0.5);
+        }
+
+        .floating-notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(45deg, #4CAF50, #2E7D32);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            z-index: 1000;
+            transform: translateX(150%);
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .floating-notification.show {
+            transform: translateX(0);
+        }
+
+        .floating-notification i {
+            margin-right: 10px;
+            font-size: 24px;
+        }
+
+        .floating-notification .close {
+            margin-left: 15px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 30px;
+            margin-top: 50px;
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #ff9900;
+            transform: translateY(-5px);
+        }
+
+        @media (max-width: 768px) {
+            .menu-container {
+                margin-top: 100px;
+                gap: 10px;
+            }
+
+            .menu-container button {
+                padding: 10px 15px;
+                font-size: 16px;
+            }
+
+            .section {
+                padding: 20px 15px;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            .menu-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .menu-item-price {
+                text-align: left;
+                margin-top: 5px;
+            }
+        }
+
+        /* Animowane tło */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        .bg-animation div {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background-color: transparent;
+            border: 2px solid rgba(255, 153, 0, 0.4);
+            border-radius: 50%;
+        }
+
+        .bg-animation div:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation: animate 15s linear infinite;
+        }
+
+        .bg-animation div:nth-child(2) {
+            top: 60%;
+            left: 80%;
+            animation: animate 12s linear infinite;
+        }
+
+        .bg-animation div:nth-child(3) {
+            top: 80%;
+            left: 30%;
+            animation: animate 18s linear infinite;
+        }
+
+        .bg-animation div:nth-child(4) {
+            top: 30%;
+            left: 70%;
+            animation: animate 14s linear infinite;
+        }
+
+        .bg-animation div:nth-child(5) {
+            top: 70%;
+            left: 20%;
+            animation: animate 16s linear infinite;
+        }
+
+        @keyframes animate {
+            0% {
+                transform: scale(0) translateY(0) rotate(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.5) translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
-    <header>
-        <img class="logo" src="https://cdn.discordapp.com/attachments/1339579815614746708/1351272324644470895/Zrzut_ekranu_2025-03-17_170218.png" alt="ANTLI Logo">
+    <!-- Animowane tło -->
+    <div class="bg-animation">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <header id="main-header">
+        <img class="logo" src="Zrzut ekranu 2025-03-17 170218.png" alt="ANTLI Logo">
     </header>
     
     <div class="menu-container">
-        <button onclick="showSection('american')">Kuchnia Amerykańska</button>
-        <button onclick="showSection('italian')">Kuchnia Włoska</button>
-        <button onclick="showSection('main')">Dania Główne</button>
-        <button onclick="showSection('zup')">Zupy</button>
-        <button onclick="ShowSection('nap')">Zupy</button>
-        <button onclick="showSection('order')">Zamówienia</button>
+        <button onclick="showSection('american')"><i class="fas fa-hamburger"></i> Amerykańska</button>
+        <button onclick="showSection('italian')"><i class="fas fa-pizza-slice"></i> Włoska</button>
+        <button onclick="showSection('main')"><i class="fas fa-utensils"></i> Dania Główne</button>
+        <button onclick="showSection('zup')"><i class="fas fa-bowl-food"></i> Zupy</button>
+        <button onclick="showSection('nap')"><i class="fas fa-glass-water"></i> Napoje</button>
+        <button onclick="showSection('order')"><i class="fas fa-shopping-cart"></i> Zamówienia</button>
     </div>
 
     <div id="american" class="section active">
-        <h2>BURGERY</h2>
-        <p>Hamburger - 7.99 ZL<br>Cheeseburger - 7.99 ZL<br>Podwójny Hamburger - 9.99 ZL</p>
-        <h2>FRYTKI</h2>
-        <p>Frytki ziemniaczane - 8.99 ZL<br>Frytki w kształcie gwiazdek - 9.99 ZL</p>
-        <h2>HOTDOGI</h2>
-        <p>HotDog z własnym wyborem dodatków - 11.99 ZL</p>
+        <div class="menu-category">
+            <h2><i class="fas fa-hamburger"></i> BURGERY</h2>
+            <div class="menu-item">
+                <span class="menu-item-name">Hamburger (wołowina, sałata, pomidor, cebula, sos)</span>
+                <span class="menu-item-price">7.99 zł</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-item-name">Cheeseburger (wołowina, ser cheddar, sałata, sos)</span>
+                <span class="menu-item-price">7.99 zł</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-item-name">Podwójny Hamburger (2x wołowina, podwójne dodatki)</span>
+                <span class="menu-item-price">9.99 zł</span>
+            </div>
+        </div>
+        
+        <div class="menu-category">
+            <h2><i class="fas fa-french-fries"></i> FRYTKI</h2>
+            <div class="menu-item">
+                <span class="menu-item-name">Frytki ziemniaczane</span>
+                <span class="menu-item-price">8.99 zł</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-item-name">Frytki w kształcie gwiazdek</span>
+                <span class="menu-item-price">9.99 zł</span>
+            </div>
+        </div>
+        
+        <div class="menu-category">
+            <h2><i class="fas fa-hotdog"></i> HOTDOGI</h2>
+            <div class="menu-item">
+                <span class="menu-item-name">HotDog z własnym wyborem dodatków</span>
+                <span class="menu-item-price">11.99 zł</span>
+            </div>
+        </div>
     </div>
     
     <div id="italian" class="section">
-        <h2>PIZZA</h2>
-        <p>Pizza Margherita - 7.99 ZL<br>Pizza Peperoni - 9.99 ZL<br>Pizza Capricciosa - 9.99 ZL</p>
-        <h2>SPAGHETTI</h2>
-        <p>Tagliatelle w sosie pomidorowym - 7.99 ZL<br>Spaghetti Bolognese - 8.99 ZL</p>
+        <div class="menu-category">
+            <h2><i class="fas fa-pizza-slice"></i> PIZZA</h2>
+            <div class="menu-item">
+                <span class="menu-item-name">Pizza Margherita (sos pomidorowy, mozzarella, bazylia)</span>
+                <span class="menu-item-price">7.99 zł</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-item-name">Pizza Peperoni (sos pomidorowy, mozzarella, pepperoni)</span>
+                <span class="menu-item-price">9.99 zł</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-item-name">Pizza Capricciosa (sos pomidorowy, mozzarella, szynka, pieczarki)</span>
+                <span class="menu-item-price">9.99 zł</span>
+            </div>
+        </div>
+        
+        <div class="menu-category">
+            <h2><i class="fas fa-pasta"></i> MAKARONY</h2>
+            <div class="menu-item">
+                <span class="menu-item-name">Tagliatelle w sosie pomidorowym</span>
+                <span class="menu-item-price">7.99 zł</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-item-name">Spaghetti Bolognese</span>
+                <span class="menu-item-price">8.99 zł</span>
+            </div>
+        </div>
     </div>
     
     <div id="main" class="section">
-        <h2>DANIA GŁÓWNE</h2>
-        <p>Polędwica z indyka - 7.99 ZL<br>Ziemniaki z koperkiem - 5.00 ZL<br>Puree ziemniaczane - 5.00 ZL</p>
-        <h2>MIĘSO</h2>
-        <p>Stek wołowy - 15.99 ZL<br>Mięso do burgera - 4.99 ZL<br>Polędwiczka wieprzowa - 7.99 ZL</p>
+        <div class="menu-category">
+            <h2><i class="fas fa-drumstick-bite"></i> DANIA GŁÓWNE JAK U BABCI</h2>
+            <div class="menu-item">
+                <span class="menu-item-name">Polędwica z indyka</span>
+                <span class="menu-item-price">7.99 zł</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-item-name">Ziemniaki z koperkiem</span>
+                <span class="menu-item-price">5.00 zł</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-item-name">Puree ziemniaczane</span>
+                <span class="menu-item-price">5.00 zł</span>
+            </div>
+        </div>
+        
+        <div class="menu-category">
+            <h2><i class="fas fa-bacon"></i> MIĘSO</h2>
+            <div class="menu-item">
+                <span class="menu-item-name">Stek wołowy (medium rare)</span>
+                <span class="menu-item-price">15.99 zł</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-item-name">Mięso do burgera</span>
+                <span class="menu-item-price">4.99 zł</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-item-name">Polędwiczka wieprzowa </span>
+                <span class="menu-item-price">7.99 zł</span>
+            </div>
+        </div>
     </div>
     
     <div id="zup" class="section">
-        <h2>ZUPY</h2>
-        <p>Zupa pomidorowa - 5.99 ZL<br>Rosół z makaronem - 6.99 ZL<br>Krupnik - 7.99 ZL<br>Barszcz - 8.99 ZL</p>
+        <div class="menu-category">
+            <h2><i class="fas fa-bowl-food"></i> ZUPY</h2>
+            <div class="menu-item">
+                <span class="menu-item-name">Zupa pomidorowa</span>
+                <span class="menu-item-price">5.99 zł</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-item-name">Rosół z makaronem</span>
+                <span class="menu-item-price">6.99 zł</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-item-name">Krupnik</span>
+                <span class="menu-item-price">7.99 zł</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-item-name">Barszcz</span>
+                <span class="menu-item-price">8.99 zł</span>
+            </div>
+        </div>
     </div>
 
     <div id="nap" class="section">
-        <h2>NAPOJE</h2>
-        <p>Coca Cola - 5.99 ZL<br>Coca Cola 0 - 5.99 ZL<br>Woda - 3.99 ZL<br>Woda Gazowana - 4.99 ZL</p>
-        <h2>ALOKOCHOL</h2>
-        <p>Stock 84 - 9.99 ZL<br>Żywiec Zdrój - 8.99 ZL</p>
+        <div class="menu-category">
+            <h2><i class="fas fa-glass-water"></i> NAPOJE</h2>
+            <div class="menu-item">
+                <span class="menu-item-name">Coca Cola</span>
+                <span class="menu-item-price">5.99 zł</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-item-name">Coca Cola Zero</span>
+                <span class="menu-item-price">5.99 zł</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-item-name">Woda niegazowana</span>
+                <span class="menu-item-price">3.99 zł</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-item-name">Woda gazowana</span>
+                <span class="menu-item-price">4.99 zł</span>
+            </div>
+        </div>
+        
+        <div class="menu-category">
+            <h2><i class="fas fa-wine-glass-alt"></i> ALKOHOL</h2>
+            <div class="menu-item">
+                <span class="menu-item-name">Stock 84</span>
+                <span class="menu-item-price">9.99 zł</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-item-name">Żywiec</span>
+                <span class="menu-item-price">8.99 zł</span>
+            </div>
+        </div>
     </div>
     
     <div id="order" class="section">
-        <h2>📦 Zamówienie</h2>
         <div class="order-form">
-            <label for="order-items">🛒 Co chcesz zamówić?</label>
-            <input type="text" id="order-items" list="menu-items" placeholder="Np. Cheeseburger, frytki">
+            <h2><i class="fas fa-shopping-cart"></i> Zamówienie</h2>
+            <label for="order-items"><i class="fas fa-utensils"></i> Co chcesz zamówić?</label>
+            <textarea id="order-items" rows="3" placeholder="Np. Cheeseburger, frytki ziemniaczane, Coca Cola" list="menu-items"></textarea>
             <datalist id="menu-items">
                 <option value="Hamburger">
                 <option value="Cheeseburger">
@@ -240,30 +629,97 @@
                 <option value="Rosół z makaronem">
                 <option value="Krupnik">
                 <option value="Barszcz">
+                <option value="Coca Cola">
+                <option value="Coca Cola Zero">
+                <option value="Woda niegazowana">
+                <option value="Woda gazowana">
+                <option value="Stock 84">
+                <option value="Żywiec">
             </datalist>
     
-            <label for="order-address">📍 Adres dostawy:</label>
+            <label for="order-address"><i class="fas fa-map-marker-alt"></i> Adres dostawy:</label>
             <input type="text" id="order-address" placeholder="Wpisz dokładny adres">
 
-            <label for="telefon">📍 Telefon:</label>
-            <input type="text" id="telefon" placeholder="Wpisz Swój Numer Telefonu">
+            <label for="telefon"><i class="fas fa-phone"></i> Telefon:</label>
+            <input type="tel" id="telefon" placeholder="Wpisz swój numer telefonu">
     
-            <label for="order-payment">💰 Metoda płatności:</label>
+            <label for="order-payment"><i class="fas fa-money-bill-wave"></i> Metoda płatności:</label>
             <select id="order-payment">
-                <option>Gotówka</option>
+                <option>Gotówka przy odbiorze</option>
+                <option>Karta płatnicza online</option>
+                <option>Przelew bankowy</option>
+                <option>Blik</option>
             </select>
+            
+            <label for="order-notes"><i class="fas fa-sticky-note"></i> Uwagi do zamówienia:</label>
+            <textarea id="order-notes" rows="2" placeholder="Specjalne życzenia, alergie itp."></textarea>
     
-            <button onclick="sendOrder()">✅ Zamów</button>
+            <button onclick="sendOrder()"><i class="fas fa-paper-plane"></i> ZŁÓŻ ZAMÓWIENIE</button>
         </div>
-    </div> 
+    </div>
+
+    <footer>
+        <p>© 2025 Restauracja ANTLI. Wszelkie prawa zastrzeżone.</p>
+        <div class="social-icons">
+            <a href="https://www.google.pl/maps/place/Piastowska+5,+32-087+Batowice/@50.1107824,20.013422,17z/data=!3m1!4b1!4m5!3m4!1s0x471650015721380b:0x69b37626a79de0f!8m2!3d50.110779!4d20.0159969?entry=ttu&g_ep=EgoyMDI1MDMyNS4xIKXMDSoASAFQAw%3D%3D"><i class="fab fa-google"></i></a>
+        </div>
+    </footer>
+
+    <div class="floating-notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="notification-message">Zamówienie zostało wysłane!</span>
+        <span class="close" onclick="hideNotification()">&times;</span>
+    </div>
 
     <script>
-        // Funkcja do przełączania widocznych sekcji menu
-        function showSection(sectionId) {
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.remove('active');
-            });
-            document.getElementById(sectionId).classList.add('active');
+function showSection(sectionId) {
+    // Ukryj wszystkie sekcje
+    document.querySelectorAll('.section').forEach(section => {
+        section.style.display = 'none';
+        section.classList.remove('active');
+    });
+    
+    // Pokaż wybraną sekcję
+    const section = document.getElementById(sectionId);
+    if (section) {
+        section.style.display = 'block';
+        section.classList.add('active');
+    }
+    
+    // Płynne przewijanie
+    window.scrollTo({
+        top: 120,
+        behavior: 'smooth'
+    });
+}
+        
+        // Efekt scrollowania dla nagłówka
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // Pokazanie powiadomienia
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            const notificationMessage = document.getElementById('notification-message');
+            
+            notificationMessage.textContent = message;
+            notification.classList.add('show');
+            
+            // Automatyczne ukrycie po 5 sekundach
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 5000);
+        }
+        
+        // Ukrycie powiadomienia
+        function hideNotification() {
+            document.getElementById('notification').classList.remove('show');
         }
     
         // Funkcja wysyłania zamówienia do webhooka Discorda
@@ -273,15 +729,22 @@
             const address = document.getElementById("order-address").value.trim();
             const telefon = document.getElementById("telefon").value.trim();
             const payment = document.getElementById("order-payment").value;
+            const notes = document.getElementById("order-notes").value.trim();
             
             // Sprawdzenie, czy pola są wypełnione
-            if (!items || !address) {
-                alert("⚠️ Proszę wypełnić wszystkie pola zamówienia!");
+            if (!items || !address || !telefon) {
+                showNotification("⚠️ Proszę wypełnić wszystkie wymagane pola!");
+                return;
+            }
+            
+            // Sprawdzenie numeru telefonu (prosta walidacja)
+            if (!/^[0-9]{9,}$/.test(telefon)) {
+                showNotification("⚠️ Proszę podać poprawny numer telefonu!");
                 return;
             }
             
             const payload = {
-                content: `**🛒 Nowe zamówienie!**\n🍔 **Zamówienie:** ${items}\n📍 **Adres:** ${address}\n📍 **Telefon:** ${telefon}💰 **Płatność:** ${payment}`
+                content: `**🛒 NOWE ZAMÓWIENIE!**\n\n**🍽️ Zamówienie:**\n${items}\n\n**📍 Adres dostawy:**\n${address}\n\n**📞 Telefon:**\n${telefon}\n\n**💰 Płatność:**\n${payment}\n\n**📝 Uwagi:**\n${notes || 'Brak'}\n\n**⏰ Czas zamówienia:**\n${new Date().toLocaleString()}`
             };
             
             fetch(webhookUrl, {
@@ -291,22 +754,31 @@
             })
             .then(response => {
                 if (response.ok) {
-                    alert("✅ Zamówienie zostało wysłane!");
+                    showNotification("✅ Zamówienie zostało wysłane!");
                     // Czyszczenie formularza po wysłaniu
                     document.getElementById("order-items").value = "";
                     document.getElementById("order-address").value = "";
                     document.getElementById("telefon").value = "";
                     document.getElementById("order-payment").selectedIndex = 0;
+                    document.getElementById("order-notes").value = "";
                 } else {
-                    alert("❌ Błąd przy wysyłaniu zamówienia.");
+                    showNotification("❌ Błąd przy wysyłaniu zamówienia.");
                 }
             })
             .catch(error => {
                 console.error("Błąd:", error);
-                alert("❌ Wystąpił problem z wysyłaniem zamówienia.");
+                showNotification("❌ Wystąpił problem z wysyłaniem zamówienia.");
             });
         }
+        
+        // Inicjalizacja - ukrycie wszystkich sekcji poza domyślną
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.section').forEach(section => {
+                if (!section.classList.contains('active')) {
+                    section.style.display = 'none';
+                }
+            });
+        });
     </script>
-    
 </body>
-</html>
+</html> 
