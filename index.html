@@ -32,6 +32,9 @@
             backdrop-filter: blur(10px);
             box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
             transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         header.scrolled {
@@ -47,6 +50,37 @@
 
         header.scrolled img.logo {
             max-width: 150px;
+        }
+
+        .language-switcher {
+            display: flex;
+            gap: 10px;
+        }
+
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .lang-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .lang-btn.active {
+            background: linear-gradient(45deg, #ff9900, #cc7700);
+            box-shadow: 0 0 10px rgba(255, 153, 0, 0.5);
         }
 
         .menu-container {
@@ -334,8 +368,18 @@
         }
 
         @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .language-switcher {
+                width: 100%;
+                justify-content: center;
+            }
+            
             .menu-container {
-                margin-top: 100px;
+                margin-top: 150px;
                 gap: 10px;
             }
 
@@ -350,6 +394,7 @@
 
             h2 {
                 font-size: 1.8rem;
+                font-family: 'Playfair Display', serif;
             }
 
             .menu-item {
@@ -412,6 +457,63 @@
             left: 20%;
             animation: animate 16s linear infinite;
         }
+        
+        .reservation-container {
+    max-width: 500px;
+    margin: 50px auto;
+    background: #1f1f1f;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    color: #fff;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  .reservation-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #f9b233;
+  }
+
+  .reservation-container label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+  }
+
+  .reservation-container input {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: #2b2b2b;
+    color: #fff;
+    transition: all 0.3s ease;
+  }
+
+  .reservation-container input:focus {
+    outline: none;
+    background-color: #333;
+    box-shadow: 0 0 5px #f9b233;
+  }
+
+  .reservation-container button {
+    width: 100%;
+    padding: 12px;
+    background-color: #f9b233;
+    color: #1f1f1f;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .reservation-container button:hover {
+    background-color: #ffc94b;
+  }
 
         @keyframes animate {
             0% {
@@ -436,52 +538,68 @@
     </div>
 
     <header id="main-header">
-        <img class="logo" src="megaladon.png" alt="ANTLI Logo">
+        <img src="https://via.placeholder.com/180x60?text=ANTLI+LOGO" alt="Logo ANTLI" class="logo">
+        
+        <div class="language-switcher">
+            <button class="lang-btn active" onclick="changeLanguage('pl')">
+                <i class="fas fa-language"></i> Polski
+            </button>
+            <button class="lang-btn" onclick="changeLanguage('en')">
+                <i class="fas fa-language"></i> English
+        </div>
     </header>
     
     <div class="menu-container">
-        <button onclick="showSection('american')"><i class="fas fa-hamburger"></i> Amerykańska</button>
-        <button onclick="showSection('italian')"><i class="fas fa-pizza-slice"></i> Włoska</button>
-        <button onclick="showSection('main')"><i class="fas fa-utensils"></i> Dania Główne</button>
-        <button onclick="showSection('zup')"><i class="fas fa-bowl-food"></i> Zupy</button>
-        <button onclick="showSection('nap')"><i class="fas fa-glass-water"></i> Napoje</button>
-        <button onclick="showSection('order')"><i class="fas fa-shopping-cart"></i> Zamówienia</button>
-        <button onclick="window.location.href='info.html'"><i class="fas fa-money-bill-wave"></i> Podanie O Prace</button>
+        <button onclick="showSection('american')"><i class="fas fa-hamburger"></i> <span class="lang-pl">Amerykańska</span><span class="lang-en" style="display:none">American</span></button>
+        <button onclick="showSection('italian')"><i class="fas fa-pizza-slice"></i> <span class="lang-pl">Włoska</span><span class="lang-en" style="display:none">Italian</span></button>
+        <button onclick="showSection('main')"><i class="fas fa-utensils"></i> <span class="lang-pl">Dania Główne</span><span class="lang-en" style="display:none">Main Dishes</span></button>
+        <button onclick="showSection('zup')"><i class="fas fa-bowl-food"></i> <span class="lang-pl">Zupy</span><span class="lang-en" style="display:none">Soups</span></button>
+        <button onclick="showSection('nap')"><i class="fas fa-glass-water"></i> <span class="lang-pl">Napoje</span><span class="lang-en" style="display:none">Drinks</span></button>
+        <button onclick="showSection('order')"><i class="fas fa-shopping-cart"></i> <span class="lang-pl">Zamówienia</span><span class="lang-en" style="display:none">Order</span></button>
+        <button onclick="window.location.href='info.html'"><i class="fas fa-money-bill-wave"></i> <span class="lang-pl">Podanie O Prace</span><span class="lang-en" style="display:none">Job Application</span></button>
+        <button onclick="window.location.href='https://www.google.pl/maps/place/Piastowska+5,+32-087+Batowice/@50.1107824,20.013422,17z/data=!3m1!4b1!4m5!3m4!1s0x471650015721380b:0x69b37626a79de0f!8m2!3d50.110779!4d20.0159969?entry=ttu&g_ep=EgoyMDI1MDMyNS4xIKXMDSoASAFQAw%3D%3D'"><i class="fas fa-map-marked-alt"></i>  <span class="lang-pl"> Trasa</span><span class="lang-en" style="display:none"> Way</span></button>
+        <button onclick="showSection('rezerwacje')"><i class="fas fa-shopping-cart"></i> <span class="lang-pl">Rezerwacje</span><span class="lang-en" style="display:none">Reservation</span></button>
     </div>
 
     <div id="american" class="section active">
         <div class="menu-category">
-            <h2><i class="fas fa-hamburger"></i> BURGERY</h2>
+            <h2><i class="fas fa-hamburger"></i> <span class="lang-pl">BURGERY</span><span class="lang-en" style="display:none">BURGERS</span></h2>
             <div class="menu-item">
-                <span class="menu-item-name">Hamburger (wołowina, sałata, pomidor, cebula, sos)</span>
+                <span class="menu-item-name lang-pl">Hamburger (wołowina, sałata, pomidor, cebula, sos)</span>
+                <span class="menu-item-name lang-en" style="display:none">Hamburger (beef, lettuce, tomato, onion, sauce)</span>
                 <span class="menu-item-price">7.99 zł</span>
             </div>
             <div class="menu-item">
-                <span class="menu-item-name">Cheeseburger (wołowina, ser cheddar, sałata, sos)</span>
+                <span class="menu-item-name lang-pl">Cheeseburger (wołowina, ser cheddar, sałata, sos)</span>
+                <span class="menu-item-name lang-en" style="display:none">Cheeseburger (beef, cheddar cheese, lettuce, sauce)</span>
                 <span class="menu-item-price">7.99 zł</span>
             </div>
             <div class="menu-item">
-                <span class="menu-item-name">Podwójny Hamburger (2x wołowina, podwójne dodatki)</span>
+                <span class="menu-item-name lang-pl">Podwójny Hamburger (2x wołowina, podwójne dodatki)</span>
+                <span class="menu-item-name lang-en" style="display:none">Double Hamburger (2x beef, double toppings)</span>
                 <span class="menu-item-price">9.99 zł</span>
             </div>
         </div>
         
         <div class="menu-category">
-            <h2><i class="fas fa-french-fries"></i> FRYTKI</h2>
+            <h2><i class="fas fa-french-fries"></i> <span class="lang-pl">FRYTKI</span><span class="lang-en" style="display:none">FRIES</span></h2>
             <div class="menu-item">
-                <span class="menu-item-name">Frytki ziemniaczane</span>
+                <span class="menu-item-name lang-pl">Frytki ziemniaczane</span>
+                <span class="menu-item-name lang-en" style="display:none">Potato fries</span>
                 <span class="menu-item-price">8.99 zł</span>
             </div>
             <div class="menu-item">
-                <span class="menu-item-name">Frytki w kształcie gwiazdek</span>
+                <span class="menu-item-name lang-pl">Frytki w kształcie gwiazdek</span>
+                <span class="menu-item-name lang-en" style="display:none">Star-shaped fries</span>
                 <span class="menu-item-price">9.99 zł</span>
             </div>
         </div>
         
         <div class="menu-category">
-            <h2><i class="fas fa-hotdog"></i> HOTDOGI</h2>
+            <h2><i class="fas fa-hotdog"></i> <span class="lang-pl">HOTDOGI</span><span class="lang-en" style="display:none">HOTDOGS</span></h2>
             <div class="menu-item">
-                <span class="menu-item-name">HotDog z własnym wyborem dodatków</span>
+                <span class="menu-item-name lang-pl">HotDog z własnym wyborem dodatków</span>
+                <span class="menu-item-name lang-en" style="display:none">HotDog with your choice of toppings</span>
                 <span class="menu-item-price">11.99 zł</span>
             </div>
         </div>
@@ -489,29 +607,34 @@
     
     <div id="italian" class="section">
         <div class="menu-category">
-            <h2><i class="fas fa-pizza-slice"></i> PIZZA</h2>
+            <h2><i class="fas fa-pizza-slice"></i> <span class="lang-pl">PIZZA</span><span class="lang-en" style="display:none">PIZZA</span></h2>
             <div class="menu-item">
-                <span class="menu-item-name">Pizza Margherita (sos pomidorowy, mozzarella, bazylia)</span>
+                <span class="menu-item-name lang-pl">Pizza Margherita (sos pomidorowy, mozzarella, bazylia)</span>
+                <span class="menu-item-name lang-en" style="display:none">Pizza Margherita (tomato sauce, mozzarella, basil)</span>
                 <span class="menu-item-price">7.99 zł</span>
             </div>
             <div class="menu-item">
-                <span class="menu-item-name">Pizza Peperoni (sos pomidorowy, mozzarella, pepperoni)</span>
+                <span class="menu-item-name lang-pl">Pizza Peperoni (sos pomidorowy, mozzarella, pepperoni)</span>
+                <span class="menu-item-name lang-en" style="display:none">Pizza Pepperoni (tomato sauce, mozzarella, pepperoni)</span>
                 <span class="menu-item-price">9.99 zł</span>
             </div>
             <div class="menu-item">
-                <span class="menu-item-name">Pizza Capricciosa (sos pomidorowy, mozzarella, szynka, pieczarki)</span>
+                <span class="menu-item-name lang-pl">Pizza Capricciosa (sos pomidorowy, mozzarella, szynka, pieczarki)</span>
+                <span class="menu-item-name lang-en" style="display:none">Pizza Capricciosa (tomato sauce, mozzarella, ham, mushrooms)</span>
                 <span class="menu-item-price">9.99 zł</span>
             </div>
         </div>
         
         <div class="menu-category">
-            <h2><i class="fas fa-pasta"></i> MAKARONY</h2>
+            <h2><i class="fas fa-pasta"></i> <span class="lang-pl">MAKARONY</span><span class="lang-en" style="display:none">PASTA</span></h2>
             <div class="menu-item">
-                <span class="menu-item-name">Tagliatelle w sosie pomidorowym</span>
+                <span class="menu-item-name lang-pl">Tagliatelle w sosie pomidorowym</span>
+                <span class="menu-item-name lang-en" style="display:none">Tagliatelle in tomato sauce</span>
                 <span class="menu-item-price">7.99 zł</span>
             </div>
             <div class="menu-item">
-                <span class="menu-item-name">Spaghetti Bolognese</span>
+                <span class="menu-item-name lang-pl">Spaghetti Bolognese</span>
+                <span class="menu-item-name lang-en" style="display:none">Spaghetti Bolognese</span>
                 <span class="menu-item-price">8.99 zł</span>
             </div>
         </div>
@@ -519,33 +642,39 @@
     
     <div id="main" class="section">
         <div class="menu-category">
-            <h2><i class="fas fa-drumstick-bite"></i> DANIA GŁÓWNE JAK U BABCI</h2>
+            <h2><i class="fas fa-drumstick-bite"></i> <span class="lang-pl">DANIA GŁÓWNE JAK U BABCI</span><span class="lang-en" style="display:none">MAIN DISHES LIKE GRANDMA'S</span></h2>
             <div class="menu-item">
-                <span class="menu-item-name">Polędwica z indyka</span>
+                <span class="menu-item-name lang-pl">Polędwica z indyka</span>
+                <span class="menu-item-name lang-en" style="display:none">Turkey tenderloin</span>
                 <span class="menu-item-price">7.99 zł</span>
             </div>
             <div class="menu-item">
-                <span class="menu-item-name">Ziemniaki z koperkiem</span>
+                <span class="menu-item-name lang-pl">Ziemniaki z koperkiem</span>
+                <span class="menu-item-name lang-en" style="display:none">Potatoes with dill</span>
                 <span class="menu-item-price">5.00 zł</span>
             </div>
             <div class="menu-item">
-                <span class="menu-item-name">Puree ziemniaczane</span>
+                <span class="menu-item-name lang-pl">Puree ziemniaczane</span>
+                <span class="menu-item-name lang-en" style="display:none">Mashed potatoes</span>
                 <span class="menu-item-price">5.00 zł</span>
             </div>
         </div>
         
         <div class="menu-category">
-            <h2><i class="fas fa-bacon"></i> MIĘSO</h2>
+            <h2><i class="fas fa-bacon"></i> <span class="lang-pl">MIĘSO</span><span class="lang-en" style="display:none">MEAT</span></h2>
             <div class="menu-item">
-                <span class="menu-item-name">Stek wołowy (medium rare)</span>
+                <span class="menu-item-name lang-pl">Stek wołowy (medium rare)</span>
+                <span class="menu-item-name lang-en" style="display:none">Beef steak (medium rare)</span>
                 <span class="menu-item-price">15.99 zł</span>
             </div>
             <div class="menu-item">
-                <span class="menu-item-name">Mięso do burgera</span>
+                <span class="menu-item-name lang-pl">Mięso do burgera</span>
+                <span class="menu-item-name lang-en" style="display:none">Burger meat</span>
                 <span class="menu-item-price">4.99 zł</span>
             </div>
             <div class="menu-item">
-                <span class="menu-item-name">Polędwiczka wieprzowa </span>
+                <span class="menu-item-name lang-pl">Polędwiczka wieprzowa</span>
+                <span class="menu-item-name lang-en" style="display:none">Pork tenderloin</span>
                 <span class="menu-item-price">7.99 zł</span>
             </div>
         </div>
@@ -553,21 +682,25 @@
     
     <div id="zup" class="section">
         <div class="menu-category">
-            <h2><i class="fas fa-bowl-food"></i> ZUPY</h2>
+            <h2><i class="fas fa-bowl-food"></i> <span class="lang-pl">ZUPY</span><span class="lang-en" style="display:none">SOUPS</span></h2>
             <div class="menu-item">
-                <span class="menu-item-name">Zupa pomidorowa</span>
+                <span class="menu-item-name lang-pl">Zupa pomidorowa</span>
+                <span class="menu-item-name lang-en" style="display:none">Tomato soup</span>
                 <span class="menu-item-price">5.99 zł</span>
             </div>
             <div class="menu-item">
-                <span class="menu-item-name">Rosół z makaronem</span>
+                <span class="menu-item-name lang-pl">Rosół z makaronem</span>
+                <span class="menu-item-name lang-en" style="display:none">Chicken noodle soup</span>
                 <span class="menu-item-price">6.99 zł</span>
             </div>
             <div class="menu-item">
-                <span class="menu-item-name">Krupnik</span>
+                <span class="menu-item-name lang-pl">Krupnik</span>
+                <span class="menu-item-name lang-en" style="display:none">Barley soup</span>
                 <span class="menu-item-price">7.99 zł</span>
             </div>
             <div class="menu-item">
-                <span class="menu-item-name">Barszcz</span>
+                <span class="menu-item-name lang-pl">Barszcz</span>
+                <span class="menu-item-name lang-en" style="display:none">Borscht</span>
                 <span class="menu-item-price">8.99 zł</span>
             </div>
         </div>
@@ -575,43 +708,78 @@
 
     <div id="nap" class="section">
         <div class="menu-category">
-            <h2><i class="fas fa-glass-water"></i> NAPOJE</h2>
+            <h2><i class="fas fa-glass-water"></i> <span class="lang-pl">NAPOJE</span><span class="lang-en" style="display:none">DRINKS</span></h2>
             <div class="menu-item">
-                <span class="menu-item-name">Coca Cola</span>
+                <span class="menu-item-name lang-pl">Coca Cola</span>
+                <span class="menu-item-name lang-en" style="display:none">Coca Cola</span>
                 <span class="menu-item-price">5.99 zł</span>
             </div>
             <div class="menu-item">
-                <span class="menu-item-name">Coca Cola Zero</span>
+                <span class="menu-item-name lang-pl">Coca Cola Zero</span>
+                <span class="menu-item-name lang-en" style="display:none">Coca Cola Zero</span>
                 <span class="menu-item-price">5.99 zł</span>
             </div>
             <div class="menu-item">
-                <span class="menu-item-name">Woda niegazowana</span>
+                <span class="menu-item-name lang-pl">Woda niegazowana</span>
+                <span class="menu-item-name lang-en" style="display:none">Still water</span>
                 <span class="menu-item-price">3.99 zł</span>
             </div>
             <div class="menu-item">
-                <span class="menu-item-name">Woda gazowana</span>
+                <span class="menu-item-name lang-pl">Woda gazowana</span>
+                <span class="menu-item-name lang-en" style="display:none">Sparkling water</span>
                 <span class="menu-item-price">4.99 zł</span>
             </div>
         </div>
         
         <div class="menu-category">
-            <h2><i class="fas fa-wine-glass-alt"></i> ALKOHOL</h2>
+            <h2><i class="fas fa-wine-glass-alt"></i> <span class="lang-pl">ALKOHOL</span><span class="lang-en" style="display:none">ALCOHOL</span></h2>
             <div class="menu-item">
-                <span class="menu-item-name">Stock 84</span>
+                <span class="menu-item-name lang-pl">Stock 84</span>
+                <span class="menu-item-name lang-en" style="display:none">Stock 84</span>
                 <span class="menu-item-price">9.99 zł</span>
             </div>
             <div class="menu-item">
-                <span class="menu-item-name">Żywiec</span>
+                <span class="menu-item-name lang-pl">Żywiec</span>
+                <span class="menu-item-name lang-en" style="display:none">Żywiec</span>
                 <span class="menu-item-price">8.99 zł</span>
             </div>
         </div>
     </div>
-    
+        
+    <div id="rezerwacje" class="section">
+        <div class="order-form">
+            <h2><i class="fas fa-calendar-check"></i> <span class="lang-pl">Rezerwacje</span><span class="lang-en" style="display:none">Reservations</span></h2>
+            
+            <label for="reservation-name"><i class="fas fa-user"></i> <span class="lang-pl">Imię i nazwisko:</span><span class="lang-en" style="display:none">Full name:</span></label>
+            <input type="text" id="reservation-name" placeholder="Jan Kowalski">
+            
+            <label for="reservation-phone"><i class="fas fa-phone"></i> <span class="lang-pl">Telefon:</span><span class="lang-en" style="display:none">Phone:</span></label>
+            <input type="tel" id="reservation-phone" placeholder="+48 123 456 789">
+            
+            <label for="reservation-date"><i class="fas fa-calendar-day"></i> <span class="lang-pl">Data:</span><span class="lang-en" style="display:none">Date:</span></label>
+            <input type="date" id="reservation-date">
+            
+            <label for="reservation-time"><i class="fas fa-clock"></i> <span class="lang-pl">Godzina:</span><span class="lang-en" style="display:none">Time:</span></label>
+            <input type="time" id="reservation-time">
+            
+            <label for="reservation-guests"><i class="fas fa-users"></i> <span class="lang-pl">Liczba osób:</span><span class="lang-en" style="display:none">Number of guests:</span></label>
+            <input type="number" id="reservation-guests" min="1" max="20" value="2">
+            
+            <label for="reservation-notes"><i class="fas fa-sticky-note"></i> <span class="lang-pl">Dodatkowe uwagi:</span><span class="lang-en" style="display:none">Additional notes:</span></label>
+            <textarea id="reservation-notes" rows="3" placeholder="Specjalne życzenia, alergie itp."></textarea>
+            
+            <button onclick="sendReservation()"><i class="fas fa-paper-plane"></i> <span class="lang-pl">POTWIERDŹ REZERWACJĘ</span><span class="lang-en" style="display:none">CONFIRM RESERVATION</span></button>
+        </div>
+    </div>
+
     <div id="order" class="section">
         <div class="order-form">
-            <h2><i class="fas fa-shopping-cart"></i> Zamówienie</h2>
-            <label for="order-items"><i class="fas fa-utensils"></i> Co chcesz zamówić?</label>
-            <textarea id="order-items" rows="3" placeholder="Np. Cheeseburger, frytki ziemniaczane, Coca Cola" list="menu-items"></textarea>
+            <h2><i class="fas fa-shopping-cart"></i> <span class="lang-pl">Zamówienie</span><span class="lang-en" style="display:none">Order</span></h2>
+            
+            <label for="order-items"><i class="fas fa-utensils"></i> <span class="lang-pl">Co chcesz zamówić?</span><span class="lang-en" style="display:none">What would you like to order?</span></label>
+            <textarea id="order-items" rows="3" class="lang-pl" placeholder="Np. Cheeseburger, frytki ziemniaczane, Coca Cola" list="menu-items"></textarea>
+            <textarea id="order-items-en" rows="3" class="lang-en" style="display:none" placeholder="E.g. Cheeseburger, potato fries, Coca Cola" list="menu-items"></textarea>
+            
             <datalist id="menu-items">
                 <option value="Hamburger">
                 <option value="Cheeseburger">
@@ -638,61 +806,67 @@
                 <option value="Żywiec">
             </datalist>
     
-            <label for="order-address"><i class="fas fa-map-marker-alt"></i> Adres dostawy:</label>
-            <input type="text" id="order-address" placeholder="Wpisz dokładny adres">
+            <label for="order-address"><i class="fas fa-map-marker-alt"></i> <span class="lang-pl">Adres dostawy:</span><span class="lang-en" style="display:none">Delivery address:</span></label>
+            <input type="text" id="order-address" class="lang-pl" placeholder="Wpisz dokładny adres">
+            <input type="text" id="order-address-en" class="lang-en" style="display:none" placeholder="Enter exact address">
 
-            <label for="telefon"><i class="fas fa-phone"></i> Telefon:</label>
-            <input type="tel" id="telefon" placeholder="Wpisz swój numer telefonu">
+            <label for="telefon"><i class="fas fa-phone"></i> <span class="lang-pl">Telefon:</span><span class="lang-en" style="display:none">Phone:</span></label>
+            <input type="tel" id="telefon" placeholder="+48 123 456 789">
     
-            <label for="order-payment"><i class="fas fa-money-bill-wave"></i> Metoda płatności:</label>
+            <label for="order-payment"><i class="fas fa-money-bill-wave"></i> <span class="lang-pl">Metoda płatności:</span><span class="lang-en" style="display:none">Payment method:</span></label>
             <select id="order-payment">
-                <option>Gotówka przy odbiorze</option>
-                <option>Karta płatnicza online</option>
-                <option>Przelew bankowy</option>
-                <option>Blik</option>
+                <option class="lang-pl">Gotówka przy odbiorze</option>
+                <option class="lang-en" style="display:none">Cash on delivery</option>
+                <option class="lang-pl">Voucher (Pokaż Przy Przyjeździe)</option>
+                <option class="lang-en" style="display:none">Voucher (Show To Deliver Guy)</option>
+                <option class="lang-pl">PayPal</option>
+                <option class="lang-en" style="display:none">PayPal</option>
             </select>
             
-            <label for="order-notes"><i class="fas fa-sticky-note"></i> Uwagi do zamówienia:</label>
-            <textarea id="order-notes" rows="2" placeholder="Specjalne życzenia, alergie itp."></textarea>
+            <label for="order-notes"><i class="fas fa-sticky-note"></i> <span class="lang-pl">Uwagi do zamówienia:</span><span class="lang-en" style="display:none">Order notes:</span></label>
+            <textarea id="order-notes" rows="2" class="lang-pl" placeholder="Specjalne życzenia, alergie itp."></textarea>
+            <textarea id="order-notes-en" rows="2" class="lang-en" style="display:none" placeholder="Special requests, allergies etc."></textarea>
     
-            <button onclick="sendOrder()"><i class="fas fa-paper-plane"></i> ZŁÓŻ ZAMÓWIENIE</button>
+            <button onclick="sendOrder()"><i class="fas fa-paper-plane"></i> <span class="lang-pl">ZŁÓŻ ZAMÓWIENIE</span><span class="lang-en" style="display:none">PLACE ORDER</span></button>
         </div>
     </div>
 
     <footer>
-        <p>© 2025 Restauracja ANTLI. Wszelkie prawa zastrzeżone.</p>
+        <p class="lang-pl">© 2025 Restauracja ANTLI. Wszelkie prawa zastrzeżone.</p>
+        <p class="lang-en" style="display:none">© 2025 ANTLI Restaurant. All rights reserved.</p>
         <div class="social-icons">
-            <a href="https://www.google.pl/maps/place/Piastowska+5,+32-087+Batowice/@50.1107824,20.013422,17z/data=!3m1!4b1!4m5!3m4!1s0x471650015721380b:0x69b37626a79de0f!8m2!3d50.110779!4d20.0159969?entry=ttu&g_ep=EgoyMDI1MDMyNS4xIKXMDSoASAFQAw%3D%3D"><i class="fab fa-google"></i></a>
+            <a href="https://www.google.pl/maps/place/Piastowska+5,+32-087+Batowice/@50.1107824,20.013422,17z/data=!3m1!4b1!4m5!3m4!1s0x471650015721380b:0x69b37626a79de0f!8m2!3d50.110779!4d20.0159969?entry=ttu&g_ep=EgoyMDI1MDMyNS4xIKXMDSoASAFQAw%3D%3D"><i class="	fas fa-map-marked-alt"></i></a>
         </div>
     </footer>
 
     <div class="floating-notification" id="notification">
         <i class="fas fa-check-circle"></i>
-        <span id="notification-message">Zamówienie zostało wysłane!</span>
+        <span id="notification-message" class="lang-pl">Zamówienie zostało wysłane!</span>
+        <span id="notification-message-en" class="lang-en" style="display:none">Order has been sent!</span>
         <span class="close" onclick="hideNotification()">&times;</span>
     </div>
 
     <script>
-function showSection(sectionId) {
-    // Ukryj wszystkie sekcje
-    document.querySelectorAll('.section').forEach(section => {
-        section.style.display = 'none';
-        section.classList.remove('active');
-    });
-    
-    // Pokaż wybraną sekcję
-    const section = document.getElementById(sectionId);
-    if (section) {
-        section.style.display = 'block';
-        section.classList.add('active');
-    }
-    
-    // Płynne przewijanie
-    window.scrollTo({
-        top: 120,
-        behavior: 'smooth'
-    });
-}
+        function showSection(sectionId) {
+            // Ukryj wszystkie sekcje
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.display = 'none';
+                section.classList.remove('active');
+            });
+            
+            // Pokaż wybraną sekcję
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.style.display = 'block';
+                section.classList.add('active');
+            }
+            
+            // Płynne przewijanie
+            window.scrollTo({
+                top: 120,
+                behavior: 'smooth'
+            });
+        }
         
         // Efekt scrollowania dla nagłówka
         window.addEventListener('scroll', function() {
@@ -708,8 +882,14 @@ function showSection(sectionId) {
         function showNotification(message) {
             const notification = document.getElementById('notification');
             const notificationMessage = document.getElementById('notification-message');
+            const notificationMessageEn = document.getElementById('notification-message-en');
             
-            notificationMessage.textContent = message;
+            if (document.querySelector('.lang-btn.active').textContent.includes('English')) {
+                notificationMessageEn.textContent = message;
+            } else {
+                notificationMessage.textContent = message;
+            }
+            
             notification.classList.add('show');
             
             // Automatyczne ukrycie po 5 sekundach
@@ -723,53 +903,182 @@ function showSection(sectionId) {
             document.getElementById('notification').classList.remove('show');
         }
     
-        // Funkcja wysyłania zamówienia do webhooka Discorda
+        // Funkcja wysyłania rezerwacjii do webhooka Discorda
+
+        function sendReservation() {
+    // Pobieranie danych z formularza
+    const name = document.getElementById('reservation-name').value;
+    const phone = document.getElementById('reservation-phone').value;
+    const date = document.getElementById('reservation-date').value;
+    const time = document.getElementById('reservation-time').value;
+    const guests = document.getElementById('reservation-guests').value;
+    const notes = document.getElementById('reservation-notes').value;
+
+    // Tworzenie obiektu rezerwacji
+    const reservation = {
+        content: `Nowa rezerwacja:\n\n**Imię i nazwisko:** ${name}\n**Telefon:** ${phone}\n**Data:** ${date}\n**Godzina:** ${time}\n**Liczba osób:** ${guests}\n**Dodatkowe uwagi:** ${notes}`
+    };
+
+    // Wysyłanie danych do webhooka Discord
+    fetch('https://discord.com/api/webhooks/1358799062614151391/4Os6CTCbarjEgn_YJ_RW6Xprw7dXswlZZO7007S29gt-UhPuouSN9EHoozuyVxV3wTte', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(reservation)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Sukces:', data);
+        alert("Reservation Reserved! / Rezerwacja Złożona!");
+    })
+    .catch((error) => {
+        console.error('Błąd:', error);
+        alert("Reservation Reserved! / Rezerwacja Złożona!");
+    });
+}
+
+        // michał XD
         function sendOrder() {
-            const webhookUrl = "https://discord.com/api/webhooks/1351279080850456647/fri4cXOgg-2a0DtdKmICzJyNg-1QyrjPeQS9SdL4MP5mMOyeYaLXhTptD6ekd4V2-Uf4";
-            const items = document.getElementById("order-items").value.trim();
-            const address = document.getElementById("order-address").value.trim();
-            const telefon = document.getElementById("telefon").value.trim();
-            const payment = document.getElementById("order-payment").value;
-            const notes = document.getElementById("order-notes").value.trim();
-            
-            // Sprawdzenie, czy pola są wypełnione
-            if (!items || !address || !telefon) {
-                showNotification("⚠️ Proszę wypełnić wszystkie wymagane pola!");
-                return;
-            }
-            
-            // Sprawdzenie numeru telefonu (prosta walidacja)
-            if (!/^[0-9]{9,}$/.test(telefon)) {
-                showNotification("⚠️ Proszę podać poprawny numer telefonu!");
-                return;
-            }
-            
-            const payload = {
-                content: `**🛒 NOWE ZAMÓWIENIE!**\n\n**🍽️ Zamówienie:**\n${items}\n\n**📍 Adres dostawy:**\n${address}\n\n**📞 Telefon:**\n${telefon}\n\n**💰 Płatność:**\n${payment}\n\n**📝 Uwagi:**\n${notes || 'Brak'}\n\n**⏰ Czas zamówienia:**\n${new Date().toLocaleString()}`
-            };
-            
-            fetch(webhookUrl, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
-            })
-            .then(response => {
-                if (response.ok) {
-                    showNotification("✅ Zamówienie zostało wysłane!");
-                    // Czyszczenie formularza po wysłaniu
-                    document.getElementById("order-items").value = "";
-                    document.getElementById("order-address").value = "";
-                    document.getElementById("telefon").value = "";
-                    document.getElementById("order-payment").selectedIndex = 0;
-                    document.getElementById("order-notes").value = "";
-                } else {
-                    showNotification("❌ Błąd przy wysyłaniu zamówienia.");
-                }
-            })
-            .catch(error => {
-                console.error("Błąd:", error);
-                showNotification("❌ Wystąpił problem z wysyłaniem zamówienia.");
+    const webhookUrl = "https://discord.com/api/webhooks/1351279080850456647/fri4cXOgg-2a0DtdKmICzJyNg-1QyrjPeQS9SdL4MP5mMOyeYaLXhTptD6ekd4V2-Uf4";
+    
+    // Pobierz wartości w zależności od aktywnego języka
+    let items, address, notes;
+    if (document.querySelector('.lang-btn.active').textContent.includes('English')) {
+        items = document.getElementById("order-items-en").value.trim();
+        address = document.getElementById("order-address-en").value.trim();
+        notes = document.getElementById("order-notes-en").value.trim();
+    } else {
+        items = document.getElementById("order-items").value.trim();
+        address = document.getElementById("order-address").value.trim();
+        notes = document.getElementById("order-notes").value.trim();
+    }
+    
+    const telefon = document.getElementById("telefon").value.trim();
+    const payment = document.getElementById("order-payment").value;
+    
+    // Sprawdzenie, czy pola są wypełnione
+    if (!items || !address || !telefon) {
+        showNotification(document.querySelector('.lang-btn.active').textContent.includes('English') ? 
+            "⚠ Please fill in all required fields!" : "⚠ Proszę wypełnić wszystkie wymagane pola!");
+        return;
+    }
+    
+    // Sprawdzenie numeru telefonu (prosta walidacja)
+    if (!/^[0-9]{9,}$/.test(telefon)) {
+        showNotification(document.querySelector('.lang-btn.active').textContent.includes('English') ? 
+            "⚠ Please enter a valid phone number!" : "⚠ Proszę podać poprawny numer telefonu!");
+        return;
+    }
+    
+    const payload = {
+        content: `🛒 NOWE ZAMÓWIENIE!\n\n🍽 Zamówienie:\n${items}\n\n📍 Adres dostawy:\n${address}\n\n📞 Telefon:\n${telefon}\n\n💰 Płatność:\n${payment}\n\n📝 Uwagi:\n${notes || 'Brak'}\n\n⏰ Czas zamówienia:\n${new Date().toLocaleString()}`
+    };
+    
+    fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+    })
+    .then(response => {
+        if (response.ok) {
+            showNotification(document.querySelector('.lang-btn.active').textContent.includes('English') ? 
+                "✅ Order has been sent!" : "✅ Zamówienie zostało wysłane!");
+            // Czyszczenie formularza po wysłaniu
+            document.getElementById("order-items").value = "";
+            document.getElementById("order-items-en").value = "";
+            document.getElementById("order-address").value = "";
+            document.getElementById("order-address-en").value = "";
+            document.getElementById("telefon").value = "";
+            document.getElementById("order-payment").selectedIndex = 0;
+            document.getElementById("order-notes").value = "";
+            document.getElementById("order-notes-en").value = "";
+        } else {
+            showNotification(document.querySelector('.lang-btn.active').textContent.includes('English') ? 
+                "❌ Error sending order." : "❌ Błąd przy wysyłaniu zamówienia.");
+        }
+    })
+    .catch(error => {
+        console.error("Błąd:", error);
+        showNotification(document.querySelector('.lang-btn.active').textContent.includes('English') ? 
+            "❌ There was a problem sending the order." : "❌ Wystąpił problem z wysyłaniem zamówienia.");
+    });
+}
+        
+document.getElementById("reservation-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value;
+    const date = document.getElementById("date").value;
+    const time = document.getElementById("time").value;
+    const people = document.getElementById("people").value;
+
+    const webhookUrl = "TUTAJ_WSTAW_SWÓJ_DISCORD_WEBHOOK_URL";
+
+    const payload = {
+      content: `📅 Nowa rezerwacja:\n👤 Imię: ${name}\n📆 Data: ${date}\n🕒 Godzina: ${time}\n👥 Liczba osób: ${people}`
+    };
+
+    fetch(webhookUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    })
+      .then(response => {
+        if (response.ok) {
+          alert("✅ Rezerwacja została wysłana!");
+          document.getElementById("reservation-form").reset();
+        } else {
+          alert("❌ Wystąpił błąd podczas wysyłania rezerwacji.");
+        }
+      })
+      .catch(error => {
+        console.error("Błąd:", error);
+        alert("⚠️ Nie udało się połączyć z webhookiem.");
+      });
+  });
+        // Funkcja zmiany języka
+        function changeLanguage(lang) {
+            // Zmień aktywny przycisk języka
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
             });
+            event.target.classList.add('active');
+            
+            // Ukryj/pokaż odpowiednie elementy językowe
+            if (lang === 'pl') {
+                document.querySelectorAll('.lang-pl').forEach(el => el.style.display = '');
+                document.querySelectorAll('.lang-en').forEach(el => el.style.display = 'none');
+                
+                // Ustaw odpowiednie placeholdery
+                document.getElementById("order-items").style.display = '';
+                document.getElementById("order-items-en").style.display = 'none';
+                document.getElementById("order-address").style.display = '';
+                document.getElementById("order-address-en").style.display = 'none';
+                document.getElementById("order-notes").style.display = '';
+                document.getElementById("order-notes-en").style.display = 'none';
+                
+                // Ustaw odpowiednie opcje w select
+                document.querySelectorAll('#order-payment option.lang-pl').forEach(opt => opt.style.display = '');
+                document.querySelectorAll('#order-payment option.lang-en').forEach(opt => opt.style.display = 'none');
+            } else {
+                document.querySelectorAll('.lang-pl').forEach(el => el.style.display = 'none');
+                document.querySelectorAll('.lang-en').forEach(el => el.style.display = '');
+                
+                // Ustaw odpowiednie placeholdery
+                document.getElementById("order-items").style.display = 'none';
+                document.getElementById("order-items-en").style.display = '';
+                document.getElementById("order-address").style.display = 'none';
+                document.getElementById("order-address-en").style.display = '';
+                document.getElementById("order-notes").style.display = 'none';
+                document.getElementById("order-notes-en").style.display = '';
+                
+                // Ustaw odpowiednie opcje w select
+                document.querySelectorAll('#order-payment option.lang-pl').forEach(opt => opt.style.display = 'none');
+                document.querySelectorAll('#order-payment option.lang-en').forEach(opt => opt.style.display = '');
+            }
         }
         
         // Inicjalizacja - ukrycie wszystkich sekcji poza domyślną
@@ -779,7 +1088,14 @@ function showSection(sectionId) {
                     section.style.display = 'none';
                 }
             });
+            
+            // Ukryj angielskie elementy na starcie
+            document.querySelectorAll('.lang-en').forEach(el => el.style.display = 'none');
+            document.getElementById("order-items-en").style.display = 'none';
+            document.getElementById("order-address-en").style.display = 'none';
+            document.getElementById("order-notes-en").style.display = 'none';
+            document.querySelectorAll('#order-payment option.lang-en').forEach(opt => opt.style.display = 'none');
         });
     </script>
 </body>
-</html> 
+</html>
