@@ -541,6 +541,97 @@
                 opacity: 0;
             }
         }
+
+        /* ikonki social media */
+        .icons-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 10px;
+        }
+        
+        .icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .icon i {
+            font-size: 24px;
+            color: #ff9900;
+            transition: all 0.3s ease;
+        }
+        
+        .icon:hover {
+            transform: translateY(-10px);
+        }
+        
+        .icon::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            z-index: -1;
+            transition: all 0.3s ease;
+        }
+        
+        #showText {
+           margin-top: 20px;
+           font-size: 24px;
+           font-family: Arial, sans-serif;
+           white-space: pre-wrap;
+           overflow: hidden;
+        }
+
+        .icon:hover::before {
+            transform: scale(1.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .icon:hover i {
+            transform: scale(1.2);
+        }
+        
+        /* Kolory ikon */
+        .icon:nth-child(1):hover i {
+            color: #1877f2; /* Facebook blue */
+        }
+        
+        .icon:nth-child(2):hover i {
+            color: #1da1f2; /* Twitter blue */
+        }
+        
+        .icon:nth-child(3):hover i {
+            color: #e4405f; /* Instagram pink */
+        }
+        
+        .icon:nth-child(4):hover i {
+            color: #ff0000; /* YouTube red */
+        }
+        
+        .icon:nth-child(5):hover i {
+            color: #0a66c2; /* LinkedIn blue */
+        }
+        .contact-div {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -557,11 +648,12 @@
         <img src="https://via.placeholder.com/180x60?text=ANTLI+LOGO" alt="Logo ANTLI" class="logo">
         
         <div class="language-switcher">
-            <button class="lang-btn active" onclick="changeLanguage('pl')">
+            <button class="lang-btn active" onclick="changeLanguage('pl', event)">
                 <i class="fas fa-language"></i> Polski
             </button>
-            <button class="lang-btn" onclick="changeLanguage('en')">
+            <button class="lang-btn" onclick="changeLanguage('en', event)">
                 <i class="fas fa-language"></i> English
+            </button>            
         </div>
     </header>
     
@@ -847,15 +939,36 @@
         </div>
     </div>
 
+
+    
+ 
     <footer>
         <p class="lang-pl">© 2025 Restauracja ANTLI. Wszelkie prawa zastrzeżone.</p>
         <p class="lang-en" style="display:none">© 2025 ANTLI Restaurant. All rights reserved.</p>
         <div class="social-icons">
-            <a href="https://www.google.pl/maps/place/Piastowska+5,+32-087+Batowice/@50.1107824,20.013422,17z/data=!3m1!4b1!4m5!3m4!1s0x471650015721380b:0x69b37626a79de0f!8m2!3d50.110779!4d20.0159969?entry=ttu&g_ep=EgoyMDI1MDMyNS4xIKXMDSoASAFQAw%3D%3D"><i class="	fas fa-map-marked-alt"></i></a>
+            <div class="icon" onclick="showText('https://www.facebook.com/profile.php?id=61575329152998')">
+                <i class="fab fa-facebook-f"></i>
+            </div>
+            <div class="icon" onclick="showText('https://x.com/restantli')">
+                <i class="fab fa-twitter"></i>
+            </div>
+            <div class="icon" onclick="showText('https://www.instagram.com/antlirest/')">
+                <i class="fab fa-instagram"></i>
+            </div>
+            <div class="icon" onclick="showText('https://www.youtube.com/@serrwex-creator')">
+                <i class="fab fa-youtube"></i>
+            </div>
+            <div class="icon" onclick="showText('https://github.com/C7LN-SerweX/')">
+                <i class="fab fa-github"></i>
+            </div>
         </div>
+    </div>
+    <div id="showText"></div>
     </footer>
 
-    <div class="floating-notification" id="notification">
+    
+            
+        <div class="floating-notification" id="notification">
         <i class="fas fa-check-circle"></i>
         <span id="notification-message" class="lang-pl">Zamówienie zostało wysłane!</span>
         <span id="notification-message-en" class="lang-en" style="display:none">Order has been sent!</span>
@@ -863,39 +976,82 @@
     </div>
 
     <script>
+        // <- Umieść ten kod POZA document.addEventListener, na samym dole pliku lub w <head> z atrybutem defer
         function showSection(sectionId) {
-            // Ukryj wszystkie sekcje
             document.querySelectorAll('.section').forEach(section => {
                 section.style.display = 'none';
                 section.classList.remove('active');
             });
-            
-            // Pokaż wybraną sekcję
+        
             const section = document.getElementById(sectionId);
             if (section) {
                 section.style.display = 'block';
                 section.classList.add('active');
             }
-            
-            // Płynne przewijanie
+        
             window.scrollTo({
                 top: 120,
                 behavior: 'smooth'
             });
         }
+        </script>
         
-        // Efekt scrollowania dla nagłówka
-        window.addEventListener('scroll', function() {
-            const header = document.getElementById('main-header');
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
+        
+        <script>
+        // Poprawiona funkcja changeLanguage
+        function changeLanguage(lang, event) {
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        
+            if (lang === 'pl') {
+                document.querySelectorAll('.lang-pl').forEach(el => el.style.display = '');
+                document.querySelectorAll('.lang-en').forEach(el => el.style.display = 'none');
+                document.getElementById("order-items").style.display = '';
+                document.getElementById("order-items-en").style.display = 'none';
+                document.getElementById("order-address").style.display = '';
+                document.getElementById("order-address-en").style.display = 'none';
+                document.getElementById("order-notes").style.display = '';
+                document.getElementById("order-notes-en").style.display = 'none';
+                document.querySelectorAll('#order-payment option.lang-pl').forEach(opt => opt.style.display = '');
+                document.querySelectorAll('#order-payment option.lang-en').forEach(opt => opt.style.display = 'none');
             } else {
-                header.classList.remove('scrolled');
+                document.querySelectorAll('.lang-pl').forEach(el => el.style.display = 'none');
+                document.querySelectorAll('.lang-en').forEach(el => el.style.display = '');
+                document.getElementById("order-items").style.display = 'none';
+                document.getElementById("order-items-en").style.display = '';
+                document.getElementById("order-address").style.display = 'none';
+                document.getElementById("order-address-en").style.display = '';
+                document.getElementById("order-notes").style.display = 'none';
+                document.getElementById("order-notes-en").style.display = '';
+                document.querySelectorAll('#order-payment option.lang-pl').forEach(opt => opt.style.display = 'none');
+                document.querySelectorAll('#order-payment option.lang-en').forEach(opt => opt.style.display = '');
             }
-        });
-        
-        // Pokazanie powiadomienia
-        function showNotification(message) {
+        }
+
+        // pokaz text //
+        function showText(text) {
+    const container = document.getElementById("showText");
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    [...text].forEach((char, i) => {
+      const span = document.createElement("span");
+      span.textContent = char;
+      span.style.opacity = "0";
+
+      // Dodajemy małe opóźnienie przed nadaniem klasy, żeby triggerować animację
+      setTimeout(() => {
+        span.style.transition = "opacity 0.3s ease";
+        span.style.opacity = "1";
+      }, i * 50);
+
+      container.appendChild(span);
+    });
+  }
+
+  // reszta
+  function showNotification(message) {
             const notification = document.getElementById('notification');
             const notificationMessage = document.getElementById('notification-message');
             const notificationMessageEn = document.getElementById('notification-message-en');
@@ -1029,7 +1185,7 @@ document.getElementById("reservation-form").addEventListener("submit", function 
     const time = document.getElementById("time").value;
     const people = document.getElementById("people").value;
 
-    const webhookUrl = "TUTAJ_WSTAW_SWÓJ_DISCORD_WEBHOOK_URL";
+    const webhookUrl = "https://discord.com/api/webhooks/1351279080850456647/fri4cXOgg-2a0DtdKmICzJyNg-1QyrjPeQS9SdL4MP5mMOyeYaLXhTptD6ekd4V2-Uf4";
 
     const payload = {
       content: `📅 Nowa rezerwacja:\n👤 Imię: ${name}\n📆 Data: ${date}\n🕒 Godzina: ${time}\n👥 Liczba osób: ${people}`
@@ -1112,6 +1268,6 @@ document.getElementById("reservation-form").addEventListener("submit", function 
             document.getElementById("order-notes-en").style.display = 'none';
             document.querySelectorAll('#order-payment option.lang-en').forEach(opt => opt.style.display = 'none');
         });
-    </script>
+        </script>
 </body>
 </html>
